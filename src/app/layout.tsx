@@ -3,7 +3,7 @@ import ThemeProvider from '@/lib/hooks/use-theme';
 import fontVariables from '@/lib/utils/fonts';
 
 import Cursor from '@/components/ui/Cursor';
-
+import ClientProviders from '@/app/ClientProviders';
 import '../styles/globals.css';
 import type { Metadata } from 'next';
 
@@ -68,11 +68,7 @@ export const metadata: Metadata = {
   ],
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="scroll-smooth">
       <head>
@@ -80,7 +76,11 @@ export default function RootLayout({
       </head>
       <body className={`text-text bg-bg ${fontVariables}`}>
         <Cursor className="hidden dark:lg:block" />
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <ClientProviders>
+            {children}
+          </ClientProviders>
+        </ThemeProvider>
       </body>
     </html>
   );
